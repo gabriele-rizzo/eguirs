@@ -7,6 +7,16 @@ pub struct DisplayOptions {
     pub size: winit::dpi::LogicalSize<u32>,
 }
 
+impl DisplayOptions {
+    pub fn new(title: &str, size: winit::dpi::LogicalSize<u32>, resizable: bool) -> Self {
+        Self {
+            title: title.to_string(),
+            size,
+            resizable,
+        }
+    }
+}
+
 pub(crate) struct Display {
     pub(crate) window: Window,
     pub(crate) display: glium::Display<WindowSurface>,
