@@ -1,16 +1,11 @@
-use winit::{error::EventLoopError, event_loop::EventLoop};
+use eframe::{App, AppCreator, CreationContext, NativeOptions, Result, run_native};
 
-use crate::runner::Runner;
+pub trait Creatable {
+    fn new(creator: &CreationContext) -> Self;
+}
 
-pub mod display;
-pub mod runner;
+pub fn run<A: App + Creatable>(name: &str, options: NativeOptions) -> Result {
+    let creator: AppCreator = Box::new(|creator| Ok(Box::new(A::new(creator))));
 
-pub fn run(
-    app: Box<dyn crate::runner::Runnable>,
-    options: &crate::display::DisplayOptions,
-) -> Result<(), EventLoopError> {
-    let events = EventLoop::new()?;
-    let mut runner = Runner::new(&events, options, app)?;
-
-    events.run_app(&mut runner)
+    run_native(name, options, creator)
 }
