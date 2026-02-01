@@ -1,6 +1,6 @@
-use egui::{Context, ViewportId};
+use egui::ViewportId;
 use egui_glium::EguiGlium;
-use glium::{Frame, glutin::surface::WindowSurface};
+use glium::Frame;
 use winit::{
     error::EventLoopError,
     event_loop::{ActiveEventLoop, EventLoop},
@@ -8,14 +8,14 @@ use winit::{
 
 use crate::display::{Display, DisplayOptions};
 
-mod handler;
+pub(crate) mod handler;
 
 pub trait Runnable {
-    fn ui(&mut self, quit: &mut bool, context: &Context);
-    fn draw(&mut self, display: &glium::Display<WindowSurface>) -> Frame;
+    fn ui(&mut self, quit: &mut bool, context: &egui::Context);
+    fn draw(&mut self, display: &glium::Display<glium::glutin::surface::WindowSurface>) -> Frame;
 }
 
-pub struct Runner {
+pub(crate) struct Runner {
     eg: EguiGlium,
     display: Display,
     app: Box<dyn Runnable>,

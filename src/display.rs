@@ -1,10 +1,10 @@
 use glium::{backend::glutin::SimpleWindowBuilder, glutin::surface::WindowSurface};
-use winit::{dpi::LogicalSize, event_loop::EventLoop, window::Window};
+use winit::{event_loop::EventLoop, window::Window};
 
 pub struct DisplayOptions {
     pub title: String,
     pub resizable: bool,
-    pub size: LogicalSize<u32>,
+    pub size: winit::dpi::LogicalSize<u32>,
 }
 
 pub(crate) struct Display {
